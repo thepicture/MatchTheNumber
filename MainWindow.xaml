@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NumberGuesser"
         mc:Ignorable="d"
-        WindowStyle="None" WindowState="Maximized">
+        WindowStyle="None" WindowState="Maximized" Title="NumberGuesser">
     <Grid>
         <Button Name="ExitButton"
                 Content="Exit"

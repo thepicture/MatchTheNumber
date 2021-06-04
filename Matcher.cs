@@ -7,7 +7,7 @@ namespace NumberGuesser
 {
     class Matcher
     {
-        private readonly ulong number;
+        private ulong number;
         private ulong infimum = ulong.MinValue;
         private ulong supremum;
         private readonly StringBuilder currentMessage = new StringBuilder();
@@ -18,7 +18,7 @@ namespace NumberGuesser
             UpdateState();
         }
 
-        private readonly List<Tuple<ulong, bool, LoggerEnum>> logList = new List<Tuple<ulong, bool, LoggerEnum>>();
+        private readonly List<Tuple<ulong, LoggerEnum>> logList = new List<Tuple<ulong, LoggerEnum>>();
 
         /// <summary>
         /// A default logger for checking if the user is lying or not.
@@ -28,27 +28,16 @@ namespace NumberGuesser
         {
             if (status.Equals(LoggerEnum.GREATER))
             {
-                logList.Add(new Tuple<ulong, bool, LoggerEnum>((supremum + infimum) / 2, (supremum + infimum) / 2 < number, status));
+                logList.Add(new Tuple<ulong, LoggerEnum>((supremum + infimum) / 2, status));
             }
             else if (status.Equals(LoggerEnum.LESS))
             {
-                logList.Add(new Tuple<ulong, bool, LoggerEnum>((supremum + infimum) / 2, (supremum + infimum) / 2 > number, status));
+                logList.Add(new Tuple<ulong, LoggerEnum>((supremum + infimum) / 2, status));
             }
             else if (status.Equals(LoggerEnum.EQUAL))
             {
-                logList.Add(new Tuple<ulong, bool, LoggerEnum>((supremum + infimum) / 2, (supremum + infimum) / 2 == number, status));
+                logList.Add(new Tuple<ulong, LoggerEnum>((supremum + infimum) / 2, status));
             }
-        }
-
-        /// <summary>
-        /// Actions for getting a lying info about the user through the game.
-        /// </summary>
-        public string GetLog()
-        {
-            return "The count of false answers: "
-                + logList.Where(l => !l.Item2).Count()
-                + "\nThe count of true answers:"
-                + logList.Where(l => l.Item2).Count();
         }
 
         /// <summary>
@@ -62,15 +51,15 @@ namespace NumberGuesser
 
         public void SayGreater()
         {
-            PushLog(LoggerEnum.GREATER);
             infimum = (supremum + infimum) / 2;
+            PushLog(LoggerEnum.GREATER);
             UpdateState();
         }
 
         public void SayLess()
         {
-            PushLog(LoggerEnum.LESS);
             supremum = (supremum + infimum) / 2;
+            PushLog(LoggerEnum.LESS);
             UpdateState();
         }
 
@@ -86,20 +75,25 @@ namespace NumberGuesser
             currentMessage.Clear().Append("Is this number " + (supremum + infimum) / 2 + "?");
         }
 
-        internal void SayYes()
+        public void SayYes()
         {
             PushLog(LoggerEnum.EQUAL);
-            currentMessage.Clear().Append("The number is " + (supremum + infimum) / 2 + "\nThe question count is " + logList.Count + "\n" + GetLog());
+            number = (supremum + infimum) / 2;
+            currentMessage.Clear().Append("The number is " + number + "\nThe count of questions is " + logList.Count);
+
             logList.ForEach(l =>
             {
-                if (!l.Item2)
+                if (l.Item2 == LoggerEnum.GREATER && l.Item1 > number)
                 {
-                    if (l.Item3 == LoggerEnum.GREATER)
-                        currentMessage.Append("\nFalse that " + l.Item1 + " is greater than " + number);
-                    else if (l.Item3 == LoggerEnum.LESS)
-                        currentMessage.Append("\nFalse that " + l.Item1 + " is less than " + number);
-                    else if (l.Item3 == LoggerEnum.EQUAL)
-                        currentMessage.Append("\nFalse that " + l.Item1 + " is equal to " + number);
+                    currentMessage.Append("\nFalse that " + l.Item1 + " is greater than " + number);
+                }
+                else if (l.Item2 == LoggerEnum.LESS && l.Item1 < number)
+                {
+                    currentMessage.Append("\nFalse that " + l.Item1 + " is less than " + number);
+                }
+                else if (l.Item2 == LoggerEnum.EQUAL && l.Item1 != number)
+                {
+                    currentMessage.Append("\nFalse that " + l.Item1 + " is equal to " + number);
                 }
             });
         }
