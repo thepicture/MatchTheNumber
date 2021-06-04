@@ -3,7 +3,6 @@
     enum LoggerEnum
     {
         GREATER,
-        LESS,
-        EQUAL
+        LESS
     }
 }

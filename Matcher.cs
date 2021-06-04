@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace NumberGuesser
@@ -34,10 +33,6 @@ namespace NumberGuesser
             {
                 logList.Add(new Tuple<ulong, LoggerEnum>((supremum + infimum) / 2, status));
             }
-            else if (status.Equals(LoggerEnum.EQUAL))
-            {
-                logList.Add(new Tuple<ulong, LoggerEnum>((supremum + infimum) / 2, status));
-            }
         }
 
         /// <summary>
@@ -51,15 +46,15 @@ namespace NumberGuesser
 
         public void SayGreater()
         {
-            infimum = (supremum + infimum) / 2;
             PushLog(LoggerEnum.GREATER);
+            infimum = (supremum + infimum) / 2;
             UpdateState();
         }
 
         public void SayLess()
         {
-            supremum = (supremum + infimum) / 2;
             PushLog(LoggerEnum.LESS);
+            supremum = (supremum + infimum) / 2;
             UpdateState();
         }
 
@@ -77,7 +72,6 @@ namespace NumberGuesser
 
         public void SayYes()
         {
-            PushLog(LoggerEnum.EQUAL);
             number = (supremum + infimum) / 2;
             currentMessage.Clear().Append("The number is " + number + "\nThe count of questions is " + logList.Count);
 
@@ -90,10 +84,6 @@ namespace NumberGuesser
                 else if (l.Item2 == LoggerEnum.LESS && l.Item1 < number)
                 {
                     currentMessage.Append("\nFalse that " + l.Item1 + " is less than " + number);
-                }
-                else if (l.Item2 == LoggerEnum.EQUAL && l.Item1 != number)
-                {
-                    currentMessage.Append("\nFalse that " + l.Item1 + " is equal to " + number);
                 }
             });
         }
