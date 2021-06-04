@@ -5,7 +5,7 @@ Use the first TextBox to enter the inclusive supremum and then press Enter or cl
 The program uses the binary search.
 
 When the number is greater than the program is questioning, say Greater.
-When the number is greater than the program is questioning, say Less.
+When the number is less than the program is questioning, say Less.
 Else say Yes.
 
 Then the result is appearing.
