@@ -1,0 +1,72 @@
+﻿<Window x:Class="MatchTheNumber.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MatchTheNumber"
+        mc:Ignorable="d"
+        Title="MatchTheNumber" WindowStyle="None" WindowState="Maximized">
+    <Grid>
+        <Button Name="ExitButton"
+                Content="Exit"
+                HorizontalAlignment="Right"
+                Width="300"
+                VerticalAlignment="Top"
+                Margin="20"
+                Click="ExitButton_Click"></Button>
+        <Button Name="RestartButton"
+                Content="Restart"
+                HorizontalAlignment="Center"
+                Width="300"
+                Visibility="Hidden"
+                VerticalAlignment="Bottom"
+                Margin="20"
+                Click="RestartButton_Click"></Button>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Name="GameBoard">
+            <TextBox Name="MessageBlock"
+                     Background="Transparent"
+                     IsReadOnly="True"
+                     Height="200"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     VerticalAlignment="Center"></TextBox>
+            <TextBox Name="NumberBox"
+                     MaxLength="19"
+                     Focusable="True"  
+                     Visibility="Collapsed"
+                     TextChanged="NumberBox_TextChanged"></TextBox>
+            <TextBox Name="SupremumBox"
+                     MaxLength="19"
+                     TextChanged="SupremumBox_TextChanged"></TextBox>
+            <Button Name="SubmitButton"
+                Content="Set the number"
+                Visibility="Collapsed"
+                IsDefault="True"
+                IsEnabled="False"
+                Click="SubmitButton_Click"></Button>
+            <Button Name="SupremumSubmitButton"
+                Content="Submit"
+                IsDefault="True"
+                IsEnabled="False"
+                Click="SupremumSubmitButton_Click"></Button>
+            <StackPanel Name="ButtonList"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                <Button Name="GreaterThanButton"
+                    Content="Greater"
+                    Width="600"
+                    Click="GreaterThanButton_Click"></Button>
+                <Button Name="YesButton"
+                    Content="Yes"
+                    Width="600"
+                    Click="YesButton_Click"></Button>
+                <Button Name="LessThanButton"
+                    Content="Less"
+                    Width="600"
+                    Click="LessThanButton_Click"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
