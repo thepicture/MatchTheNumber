@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MatchTheNumber
+namespace NumberGuesser
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,42 +24,10 @@ namespace MatchTheNumber
             int sum = 0;
             while (number > 10)
             {
-                sum += 1;
+                sum ++;
                 number /= 10;
             }
             return sum;
-        }
-
-        private void NumberBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (new Regex(@"^[1-9][0-9]*$").IsMatch(textBox.Text))
-            {
-                if (!(ulong.Parse(textBox.Text) > Matcher.MAX_VALUE))
-                {
-                    textBox.Foreground = Brushes.Black;
-                    SubmitButton.IsEnabled = true;
-                }
-                else
-                {
-                    textBox.Foreground = Brushes.Red;
-                    SubmitButton.IsEnabled = false;
-                }
-            }
-            else
-            {
-                textBox.Foreground = Brushes.Red;
-                SubmitButton.IsEnabled = false;
-            }
-        }
-
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            matcher = new Matcher(Convert.ToUInt64(NumberBox.Text));
-            SubmitButton.Visibility = Visibility.Collapsed;
-            NumberBox.Visibility = Visibility.Collapsed;
-            ButtonList.Visibility = Visibility.Visible;
-            MessageBlock.Text = matcher.GetMessage();
         }
 
         private void GreaterThanButton_Click(object sender, RoutedEventArgs e)
@@ -83,14 +50,6 @@ namespace MatchTheNumber
             }
         }
 
-        private void YesButton_Click(object sender, RoutedEventArgs e)
-        {
-            matcher.SayYes();
-            MessageBlock.Text = matcher.GetMessage();
-            ButtonList.Visibility = Visibility.Collapsed;
-            RestartButton.Visibility = Visibility.Visible;
-        }
-
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
@@ -99,13 +58,12 @@ namespace MatchTheNumber
 
         private void SupremumSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            Matcher.MAX_VALUE = ulong.Parse(SupremumBox.Text);
-            SubmitButton.Visibility = Visibility.Visible;
-            NumberBox.Visibility = Visibility.Visible;
+            matcher = new Matcher(ulong.Parse(SupremumBox.Text));
             SupremumSubmitButton.Visibility = Visibility.Collapsed;
             SupremumBox.Visibility = Visibility.Collapsed;
-            MessageBlock.Text = "Please enter the number from 1 up to " + Matcher.MAX_VALUE + " :";
-            NumberBox.Focus();
+
+            ButtonList.Visibility = Visibility.Visible;
+            MessageBlock.Text = matcher.GetMessage();
         }
 
         private void SupremumBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -115,7 +73,7 @@ namespace MatchTheNumber
             {
                 if (ulong.Parse(textBox.Text) > 1000000000)
                 {
-                    SubmitButton.IsEnabled = false;
+                    SupremumSubmitButton.IsEnabled = false;
                     return;
                 }
                 textBox.Foreground = Brushes.Black;
@@ -126,6 +84,14 @@ namespace MatchTheNumber
                 textBox.Foreground = Brushes.Red;
                 SupremumSubmitButton.IsEnabled = false;
             }
+        }
+
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            matcher.SayYes();
+            MessageBlock.Text = matcher.GetMessage();
+            ButtonList.Visibility = Visibility.Collapsed;
+            RestartButton.Visibility = Visibility.Visible;
         }
     }
 }

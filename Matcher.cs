@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
 
-namespace MatchTheNumber
+namespace NumberGuesser
 {
     class Matcher
     {
-        static public ulong MAX_VALUE;
         private readonly ulong number;
         private ulong infimum = ulong.MinValue;
         private ulong supremum;
         private readonly StringBuilder currentMessage = new StringBuilder();
 
-        public Matcher(ulong number)
+        public Matcher(ulong supremum)
         {
-            this.number = number;
-            supremum = MAX_VALUE + 1;
+            this.supremum = supremum + 1;
             UpdateState();
         }
 
@@ -84,8 +81,7 @@ namespace MatchTheNumber
         {
             if (infimum == supremum)
             {
-                MessageBox.Show("The program will be closed due to the count of false answers.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                App.Current.Shutdown();
+                SayYes();
             }
             currentMessage.Clear().Append("Is this number " + (supremum + infimum) / 2 + "?");
         }
@@ -93,7 +89,7 @@ namespace MatchTheNumber
         internal void SayYes()
         {
             PushLog(LoggerEnum.EQUAL);
-            currentMessage.Clear().Append("The number is : " + logList.Count + "\n" + GetLog());
+            currentMessage.Clear().Append("The number is " + (supremum + infimum) / 2 + "\nThe question count is " + logList.Count + "\n" + GetLog());
             logList.ForEach(l =>
             {
                 if (!l.Item2)

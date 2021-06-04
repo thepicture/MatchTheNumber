@@ -1,7 +1,7 @@
-﻿<Application x:Class="MatchTheNumber.App"
+﻿<Application x:Class="NumberGuesser.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MatchTheNumber"
+             xmlns:local="clr-namespace:NumberGuesser"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="TextBlock">

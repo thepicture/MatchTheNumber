@@ -1,4 +1,4 @@
-﻿namespace MatchTheNumber
+﻿namespace NumberGuesser
 {
     enum LoggerEnum
     {
