@@ -9,3 +9,8 @@ When the number is less than the program is questioning, say Less.
 Else say Yes.
 
 Then the result is appearing.
+## Screenshots
+### Main menu
+![Main menu](/Screenshots/Main.png)
+### Questions in the game
+![Questions in the game](/Screenshots/InGame.png)
